@@ -102,5 +102,7 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: git@github.com:pppeng3/pppeng3.github.io.git
+  branch: main
 
