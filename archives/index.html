@@ -58,7 +58,7 @@
                             <div id="sidebar" class="float-right">
     <a href="/" rel="home">
         <v-avatar size=96>
-            <img id="logo" src="/images/avatar.webp">     
+            <img id="logo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2015%2F12%2F10%2F24907694592916743_320x320.jpg&amp;refer=http%3A%2F%2Fcdnimg103.lizhi.fm&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1652427358&amp;t=869256d6280ef33d7afbf15ab91a7192">     
         </v-avatar> 
     </a>
     <v-divider></v-divider>
@@ -95,7 +95,7 @@
             </v-list-item>
         
             
-            <v-list-item href="https://garybear.cn/" link>
+            <v-list-item href="https://blog.apale7.cn/" link>
             <v-list-item-icon><v-icon>rss_feed</v-icon></v-list-item-icon>
             <v-list-item-content>
                 我的博客
@@ -121,6 +121,18 @@
                             <v-hover v-model="menuHover">
                                 <v-list-item-content>
                                     <span>hexo</span>                              
+                                </v-list-item-content>                           
+                            </v-hover>
+                        </v-badge>
+                    </v-list-item>
+                
+            
+                
+                    <v-list-item href="/categories/golang-redis/" link>
+                        <v-badge :value="menuHover" transition="slide-y-transition" inline content="1" >
+                            <v-hover v-model="menuHover">
+                                <v-list-item-content>
+                                    <span>golang redis</span>                              
                                 </v-list-item-content>                           
                             </v-hover>
                         </v-badge>
@@ -208,7 +220,7 @@
             </v-btn>
           
             
-            <v-btn icon href="https://garybear.cn/">
+            <v-btn icon href="https://blog.apale7.cn/">
               <v-icon>rss_feed</v-icon>
             </v-btn>
           
@@ -239,6 +251,34 @@
                     <span class="timeline-subtitle">Archives</span>
                 </v-timeline-item>
                 
+            
+            <v-timeline-item fill-dot small color="secondary lighten-2">
+                <div class="timeline-item-post d-none d-md-block">
+                    <span class="timeline-item-time">2022.04.13</span>
+                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0HashMap-%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95/" class="timeline-item-title">golang实现HashMap(链地址法)</a>
+                </div>
+                <div class="timeline-item-post-mobile d-block d-md-none">
+                    <span class="timeline-item-time">2022.04.13</span><br>
+                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0HashMap-%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95/" class="timeline-item-title">golang实现HashMap(链地址法)</a>
+                </div>
+                <v-divider></v-divider>
+            </v-timeline-item>
+        
+            
+            
+            <v-timeline-item fill-dot small color="secondary lighten-2">
+                <div class="timeline-item-post d-none d-md-block">
+                    <span class="timeline-item-time">2022.04.13</span>
+                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E8%A1%A8%E4%BB%A5%E5%8F%8A%E8%B7%B3%E8%A1%A8/" class="timeline-item-title">golang实现压缩表以及跳跃表</a>
+                </div>
+                <div class="timeline-item-post-mobile d-block d-md-none">
+                    <span class="timeline-item-time">2022.04.13</span><br>
+                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E8%A1%A8%E4%BB%A5%E5%8F%8A%E8%B7%B3%E8%A1%A8/" class="timeline-item-title">golang实现压缩表以及跳跃表</a>
+                </div>
+                <v-divider></v-divider>
+            </v-timeline-item>
+        
+            
             
             <v-timeline-item fill-dot small color="secondary lighten-2">
                 <div class="timeline-item-post d-none d-md-block">
