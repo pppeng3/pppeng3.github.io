@@ -103,7 +103,7 @@
             </v-list-item>
         
             
-            <v-list-item href="https://garybear.cn/hexo-theme-insulin/doc/#/" link>
+            <v-list-item href="https://hexo.io/zh-cn/docs/" link>
             <v-list-item-icon><v-icon>insert_drive_file</v-icon></v-list-item-icon>
             <v-list-item-content>
                 说明文档
@@ -125,22 +125,22 @@
         <div class="footer-social">
             
                 
-                <v-btn icon href="mailto:kb1000fx@gmail.com" target="_blank">
+                <v-btn icon href="/" target="_blank">
                     <v-icon>fas fa-envelope</v-icon>
                 </v-btn>
             
                 
-                <v-btn icon href="https://github.com/kb1000fx" target="_blank">
+                <v-btn icon href="https://github.com/pppeng3" target="_blank">
                     <v-icon>fab fa-github</v-icon>
                 </v-btn>
             
                 
-                <v-btn icon href="https://steamcommunity.com/profiles/76561198346798163" target="_blank">
+                <v-btn icon href="/" target="_blank">
                     <v-icon>fab fa-steam</v-icon>
                 </v-btn>
             
                 
-                <v-btn icon href="https://weibo.com/kb1000fx" target="_blank">
+                <v-btn icon href="/" target="_blank">
                     <v-icon>fab fa-weibo</v-icon>
                 </v-btn>
             
@@ -204,7 +204,7 @@
             </v-btn>
           
             
-            <v-btn icon href="https://garybear.cn/hexo-theme-insulin/doc/#/">
+            <v-btn icon href="https://hexo.io/zh-cn/docs/">
               <v-icon>insert_drive_file</v-icon>
             </v-btn>
           
@@ -251,7 +251,9 @@
     
     
     <div class="post-content typo">
-        <h2 id="一、使用github创个人博客网站"><a href="#一、使用github创个人博客网站" class="headerlink" title="一、使用github创个人博客网站"></a><strong>一、使用github创个人博客网站</strong></h2><h3 id="1-新建仓库"><a href="#1-新建仓库" class="headerlink" title="1.新建仓库"></a>1.新建仓库</h3><h3 id="2-更改仓库Settings下的Page"><a href="#2-更改仓库Settings下的Page" class="headerlink" title="2.更改仓库Settings下的Page"></a>2.更改仓库Settings下的Page</h3><p><img src="/../image/hexo_github/0.png"><br><img src="/../image/hexo_github/1.png"></p>
+        <span id="more"></span>摘要<!--more-->
+
+<h2 id="一、使用github创个人博客网站"><a href="#一、使用github创个人博客网站" class="headerlink" title="一、使用github创个人博客网站"></a><strong>一、使用github创个人博客网站</strong></h2><h3 id="1-新建仓库"><a href="#1-新建仓库" class="headerlink" title="1.新建仓库"></a>1.新建仓库</h3><h3 id="2-更改仓库Settings下的Page"><a href="#2-更改仓库Settings下的Page" class="headerlink" title="2.更改仓库Settings下的Page"></a>2.更改仓库Settings下的Page</h3><p><img src="/../image/hexo_github/0.png"><br><img src="/../image/hexo_github/1.png"></p>
 <h2 id="二、使用Hexo搭建个人博客网站"><a href="#二、使用Hexo搭建个人博客网站" class="headerlink" title="二、使用Hexo搭建个人博客网站"></a><strong>二、使用Hexo搭建个人博客网站</strong></h2><h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>Hexo是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。即把用户的markdown文件，按照指定的主题解析成静态网页。</p>
 <h3 id="2-安装Hexo"><a href="#2-安装Hexo" class="headerlink" title="2.安装Hexo"></a>2.安装Hexo</h3><p>安装使用hexo之前需要先安装Node.js和Git，当已经安装了Node.js和npm可以通过以下命令安装hexo</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$npm install -g hero-cli</span><br></pre></td></tr></table></figure>
@@ -266,7 +268,7 @@
 <h3 id="3-新建项目"><a href="#3-新建项目" class="headerlink" title="3.新建项目"></a>3.新建项目</h3><p>安装完Hexo后,执行以下命令:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$hexo init &lt;folder&gt;</span><br><span class="line">$cd &lt;folder&gt;</span><br><span class="line">$npm install</span><br></pre></td></tr></table></figure>
 <p>新建完成后,指定目录中的情况如下<br>.<br>├── _config.yml<br>├── package.json<br>├── scaffolds<br>├── source<br>|   ├── _drafts<br>|   └── _posts<br>└── themes<br>之后将此文件关联到github仓库,修改_config.yml里的deploy配置如下:<br><img src="/../image/hexo_github/6.png"><br>执行以下命令,即可推送部署到github.io</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$hexo deploy --generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$hexo deploy --generate</span><br><span class="line">$hexo server -p 5000 #本地查看效果</span><br></pre></td></tr></table></figure>
 <p>访问<a href="https://pppeng3.github.io/">个人github.io网站</a>即可<br><img src="/../image/hexo_github/7.png"></p>
 <h4 id="3-1-修改主题"><a href="#3-1-修改主题" class="headerlink" title="3.1 修改主题"></a>3.1 修改主题</h4><p>该网站使用的是insulin主题配色,更改步骤如下,先下载该项目主题,之后解压到自己项目的thems文件夹下,将_config.yml内的themes配置从默认的landscape改为insulin即可<br><code>$ git clone https://github.com/kb1000fx/hexo-theme-insulin</code><br>insulin主题设置可参考<a target="_blank" rel="noopener" href="https://garybear.cn/hexo-theme-insulin/#/">详细教程</a>,<a target="_blank" rel="noopener" href="https://hexo.io/themes/">其他主题</a>可从官网进行下载<br>之后得到网站页面如下:<br><img src="/../image/hexo_github/8.png"></p>
 <h4 id="3-2-hexo命令"><a href="#3-2-hexo命令" class="headerlink" title="3.2 hexo命令"></a>3.2 hexo命令</h4><p>参考<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">官方教程</a></p>
