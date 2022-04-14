@@ -41,8 +41,8 @@
     
     
     <title>
-          
-            PP&#39;s Blog
+        
+            Mysql Log详谈 | PP&#39;s Blog
         
     </title>
     
@@ -113,45 +113,12 @@
     </v-list>
     <v-divider></v-divider>
     
-        <v-list id="sub-menu" class="font-weight-medium" dense>
-            
-                
-                    <v-list-item href="/categories/Mysql/" link>
-                        <v-badge :value="menuHover" transition="slide-y-transition" inline content="1" >
-                            <v-hover v-model="menuHover">
-                                <v-list-item-content>
-                                    <span>Mysql</span>                              
-                                </v-list-item-content>                           
-                            </v-hover>
-                        </v-badge>
-                    </v-list-item>
-                
-            
-                
-                    <v-list-item href="/categories/golang-redis/" link>
-                        <v-badge :value="menuHover" transition="slide-y-transition" inline content="2" >
-                            <v-hover v-model="menuHover">
-                                <v-list-item-content>
-                                    <span>golang redis</span>                              
-                                </v-list-item-content>                           
-                            </v-hover>
-                        </v-badge>
-                    </v-list-item>
-                
-            
-                
-                    <v-list-item href="/categories/hexo/" link>
-                        <v-badge :value="menuHover" transition="slide-y-transition" inline content="1" >
-                            <v-hover v-model="menuHover">
-                                <v-list-item-content>
-                                    <span>hexo</span>                              
-                                </v-list-item-content>                           
-                            </v-hover>
-                        </v-badge>
-                    </v-list-item>
-                
-            
-        </v-list>    
+        <div class="post-toc">
+            <a href="/2022/04/14/Mysql-Log%E8%AF%A6%E8%B0%88/" class="toc-header">Table of Contents</a>
+            <div class="toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#redo-undo-bin"><span class="toc-number">1.</span> <span class="toc-text">redo undo bin</span></a></li></ol>
+            </div>
+        </div>
     
 
     <div id="footer">
@@ -252,41 +219,65 @@
   </v-col>
 </v-row>
 
-                            <v-card class="elevation-2 index-card">
-    <v-timeline class="timeline" dense>
-        <v-timeline-item class="timeline-header" color="secondary lighten-2">
-            <span class="timeline-title">golang redis</span>
-            <span class="timeline-subtitle">Categories</span>
-        </v-timeline-item>
+                            <v-card class="elevation-2 post-card">
+    
+    
+        <div class="post-header">
+  <a class="post-header-title font-weight-medium" href="/2022/04/14/Mysql-Log%E8%AF%A6%E8%B0%88/">Mysql Log详谈</a>
+  <div class="post-header-meta">   
+    <span>
+      <v-icon color="">event</v-icon>
+      Posted on:&nbsp;2022-04-14
+    </span>
+    <span>
+      <v-icon color="">event_available</v-icon>
+      Edited on:&nbsp;2022-04-14
+    </span>
+    <span>
+      <v-icon color="">folder</v-icon>
+      In:&nbsp;<a class="category-link" href="/categories/Mysql/">Mysql</a>
+    </span>
+    
+    <span>
+      <v-icon color="">visibility</v-icon>
+      Views:&nbsp;<span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+    </span>
+    
+  </div>
+</div>
+
+    
+    
+    
+    
+    <div class="post-content typo">
+        <p><em>本文大多资料参考来源于Mysql45讲</em></p>
+<h2 id="redo-undo-bin"><a href="#redo-undo-bin" class="headerlink" title="redo undo bin"></a>redo undo bin</h2>
+    </div>
+    <!--文末结束语-->
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;"> --- 本文结束 <i class="fas fa-heart"></i> The End --- </div>
+    
+    <!--页脚广告-->
+    
+    <v-divider></v-divider>
+    
+    <div class="post-nav">             
+              
+          
+            <div class="post-nav-button float-right">
+                <a class="font-weight-bold text-right" href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0HashMap-%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95/">      
+                    golang实现HashMap(链地址法)
+                </a>
+                <v-icon>chevron_right</v-icon>
+            </div>
         
-            <v-timeline-item fill-dot small color="secondary lighten-2">
-                <div class="timeline-item-post d-none d-md-block">
-                    <span class="timeline-item-time">2022.04.13</span>
-                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0HashMap-%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95/" class="timeline-item-title">golang实现HashMap(链地址法)</a>
-                </div>
-                <div class="timeline-item-post-mobile d-block d-md-none">
-                    <span class="timeline-item-time">2022.04.13</span><br>
-                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0HashMap-%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95/" class="timeline-item-title">golang实现HashMap(链地址法)</a>
-                </div>
-                <v-divider></v-divider>
-            </v-timeline-item>
-        
-            <v-timeline-item fill-dot small color="secondary lighten-2">
-                <div class="timeline-item-post d-none d-md-block">
-                    <span class="timeline-item-time">2022.04.13</span>
-                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E8%A1%A8%E4%BB%A5%E5%8F%8A%E8%B7%B3%E8%A1%A8/" class="timeline-item-title">golang实现压缩表以及跳跃表</a>
-                </div>
-                <div class="timeline-item-post-mobile d-block d-md-none">
-                    <span class="timeline-item-time">2022.04.13</span><br>
-                    <a href="/2022/04/13/golang%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E8%A1%A8%E4%BB%A5%E5%8F%8A%E8%B7%B3%E8%A1%A8/" class="timeline-item-title">golang实现压缩表以及跳跃表</a>
-                </div>
-                <v-divider></v-divider>
-            </v-timeline-item>
-        
-    </v-timeline>
+    </div>
 </v-card>
 
-         
+
+
+        
                             <div id="mobile-footer" class="d-block d-md-none">
                                 <v-divider></v-divider>
                                 <div id="mobile-footer-content">
@@ -315,6 +306,12 @@
 
 
 
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.4.8/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({
+        startOnLoad: true,
+        theme: "default"
+    });</script>
 
 
 
