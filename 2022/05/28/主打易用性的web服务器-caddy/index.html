@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <script>if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode)) window.location.href="https://support.dmeng.net/upgrade-your-browser.html?referrer="+encodeURIComponent(window.location.href); </script>
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+     
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.2.30/dist/vuetify.min.css" rel="stylesheet">
+    
+<link rel="stylesheet" href="/css/main.css">
+
+    
+    
+
+
+
+
+
+
+
+    
+    
+          
+
+    
+    
+    
+    
+    <title>
+        
+            主打易用性的web服务器--Caddy | PP&#39;s Blog
+        
+    </title>
+    
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+    <div id="app">
+        <v-app>
+            <v-content id="page">
+                <v-container fluid>
+                    <v-row>
+                        <v-col cols="2" class="d-none d-md-block">
+                            <div id="sidebar" class="float-right">
+    <a href="/" rel="home">
+        <v-avatar size=96>
+            <img id="logo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2015%2F12%2F10%2F24907694592916743_320x320.jpg&amp;refer=http%3A%2F%2Fcdnimg103.lizhi.fm&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1652427358&amp;t=869256d6280ef33d7afbf15ab91a7192">     
+        </v-avatar> 
+    </a>
+    <v-divider></v-divider>
+    <div class="mini-menu">
+        <v-btn icon href="/">
+            <v-icon>home</v-icon>
+        </v-btn>
+        <v-btn icon href="/categories/">
+            <v-icon>folder</v-icon>
+        </v-btn>
+        <v-btn icon href="/tags/">
+            <v-icon>bookmark</v-icon>
+        </v-btn>
+        <v-btn icon @click="SetNightMode">
+            <v-icon>{{ nightMode }}</v-icon>
+        </v-btn>
+    </div>
+    <v-list id="main-menu" class="font-weight-bold" flat>
+        
+            
+            <v-list-item href="/archives/" link>
+            <v-list-item-icon><v-icon>archive</v-icon></v-list-item-icon>
+            <v-list-item-content>
+                Archives
+            </v-list-item-content>
+            </v-list-item>
+        
+            
+            <v-list-item href="/about/" link>
+            <v-list-item-icon><v-icon>account_circle</v-icon></v-list-item-icon>
+            <v-list-item-content>
+                About
+            </v-list-item-content>
+            </v-list-item>
+        
+            
+            <v-list-item href="https://blog.apale7.cn/" link>
+            <v-list-item-icon><v-icon>rss_feed</v-icon></v-list-item-icon>
+            <v-list-item-content>
+                我的博客
+            </v-list-item-content>
+            </v-list-item>
+        
+            
+            <v-list-item href="https://hexo.io/zh-cn/docs/" link>
+            <v-list-item-icon><v-icon>insert_drive_file</v-icon></v-list-item-icon>
+            <v-list-item-content>
+                说明文档
+            </v-list-item-content>
+            </v-list-item>
+        
+    </v-list>
+    <v-divider></v-divider>
+    
+        <div class="post-toc">
+            <a href="/2022/05/28/%E4%B8%BB%E6%89%93%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84web%E6%9C%8D%E5%8A%A1%E5%99%A8-caddy/" class="toc-header">Table of Contents</a>
+            <div class="toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Caddy%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">一、Caddy介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Caddy%E5%AE%89%E8%A3%85%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">2.</span> <span class="toc-text">二、Caddy安装与快速入门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Caddyfile%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">三、Caddyfile详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Caddy-API"><span class="toc-number">4.</span> <span class="toc-text">四、Caddy API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81service"><span class="toc-number">5.</span> <span class="toc-text">四、service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Caddy%E4%B8%8ENginx%E5%AF%B9%E6%AF%94"><span class="toc-number">6.</span> <span class="toc-text">五、Caddy与Nginx对比</span></a></li></ol>
+            </div>
+        </div>
+    
+
+    <div id="footer">
+        <div class="footer-social">
+            
+                
+                <v-btn icon href="/" target="_blank">
+                    <v-icon>fas fa-envelope</v-icon>
+                </v-btn>
+            
+                
+                <v-btn icon href="https://github.com/pppeng3" target="_blank">
+                    <v-icon>fab fa-github</v-icon>
+                </v-btn>
+            
+                
+                <v-btn icon href="/" target="_blank">
+                    <v-icon>fab fa-steam</v-icon>
+                </v-btn>
+            
+                
+                <v-btn icon href="/" target="_blank">
+                    <v-icon>fab fa-weibo</v-icon>
+                </v-btn>
+            
+        </div>
+        <v-divider></v-divider>
+        <div class="footer-content">
+            
+                <span id="busuanzi_container_site_uv" style="display: none;"> 
+                    Total Visitors <span id="busuanzi_value_site_uv"></span>
+                </span>
+                <br>
+            
+            <span>Theme: <a target="_blank" rel="noopener" href="https://github.com/kb1000fx/hexo-theme-insulin">Insulin</a></span><br>
+            <span>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a></span><br>
+            <span>
+                &copy; 2015 - 2022 
+                PP
+            </span>
+        </div>
+    </div>
+</div>
+
+                        </v-col>
+                        <v-col cols="12" md="10">
+                            <v-row>
+  <v-col cols="12" md="8" align-self="end">
+    <div id="site-header">
+      <div id="site-title">
+        <a href="/" rel="home">PP&#39;s Blog</a>
+      </div>
+      <div id="site-description"></div>
+      <div id="mobile-menu" class="d-block d-md-none">
+        <v-text-field label="请输入关键字" data-src="search.xml" v-model="searchHeaderValue" prepend-inner-icon="search" clearable clear-icon="clear" @keydown.enter="EnterSearch(searchHeaderValue,false)"></v-text-field>
+        <div class="mobile-mini-menu">
+          <v-btn icon href="/">
+              <v-icon>home</v-icon>
+          </v-btn>
+          <v-btn icon href="/categories/">
+              <v-icon>folder</v-icon>
+          </v-btn>
+          <v-btn icon href="/tags/">
+              <v-icon>bookmark</v-icon>
+          </v-btn>
+          <v-btn icon @click="SetNightMode">
+              <v-icon>{{ nightMode }}</v-icon>
+          </v-btn>
+          
+            
+            <v-btn icon href="/archives/">
+              <v-icon>archive</v-icon>
+            </v-btn>
+          
+            
+            <v-btn icon href="/about/">
+              <v-icon>account_circle</v-icon>
+            </v-btn>
+          
+            
+            <v-btn icon href="https://blog.apale7.cn/">
+              <v-icon>rss_feed</v-icon>
+            </v-btn>
+          
+            
+            <v-btn icon href="https://hexo.io/zh-cn/docs/">
+              <v-icon>insert_drive_file</v-icon>
+            </v-btn>
+          
+        </div>
+      </div>    
+    </div>
+  </v-col>  
+  <v-col cols="4" align-self="end" class="d-none d-md-block">
+    <v-col align-self="end">
+      <v-text-field label="请输入关键字" data-src="search.xml" v-model="searchHeaderValue" prepend-icon="search" clearable clear-icon="clear" @keydown.enter="EnterSearch(searchHeaderValue,false)"></v-text-field>
+    </v-col> 
+  </v-col>
+</v-row>
+
+                            <v-card class="elevation-2 post-card">
+    
+    
+        <div class="post-header">
+  <a class="post-header-title font-weight-medium" href="/2022/05/28/%E4%B8%BB%E6%89%93%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84web%E6%9C%8D%E5%8A%A1%E5%99%A8-caddy/">主打易用性的web服务器--Caddy</a>
+  <div class="post-header-meta">   
+    <span>
+      <v-icon color="">event</v-icon>
+      Posted on:&nbsp;2022-05-28
+    </span>
+    <span>
+      <v-icon color="">event_available</v-icon>
+      Edited on:&nbsp;2022-06-14
+    </span>
+    <span>
+      <v-icon color="">folder</v-icon>
+      In:&nbsp;Uncategorized
+    </span>
+    
+    <span>
+      <v-icon color="">visibility</v-icon>
+      Views:&nbsp;<span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+    </span>
+    
+  </div>
+</div>
+
+    
+    
+    
+    
+    <div class="post-content typo">
+        <p><em>目前Nginx相对于Caddy来说更为成熟性能更优,若有兴趣用一些简易版的web服务器可以看此文。</em></p>
+<h2 id="一、Caddy介绍"><a href="#一、Caddy介绍" class="headerlink" title="一、Caddy介绍"></a>一、Caddy介绍</h2><p>Caddy作者Matt Holt对Caddy的描述如下”其他的Web服务器为Web而生,Caddy为human而生”</p>
+<p>Nginx是一款当下最热门也最流行的Web服务器,常用来做静态资源托管或反向代理,具体知识点可以参照阅读我之前发的<em>nginx要点应知应会</em>,而最近看到朋友给我推荐的Caddy服务器主要主打易用性,朋友的原话是“在不追求性能的情况下,可以作为替代nginx的web服务器”。<br>Caddy是一款功能强大、扩展性高的web服务器,采用Go语言编写,主打易用性,使用配置较为方便。</p>
+<p>Caddy主要特性如下:</p>
+<ul>
+<li>采用go语言编写,内存安全更有保障,易于部署,没有依赖</li>
+<li>跨平台特性,很好地支持Windows、Linux、Mac系统</li>
+<li>全自动支持HTTP&#x2F;2协议,支持自动化HTTPS配置,可自动申请HTTPS证书并进行配置,支持IPv6环境</li>
+<li>独创的Caddyfile配置非常简单</li>
+<li>Caddy对WebSockets有很好的支持,同时可以通过其提供的Admin API实现动态修改配置</li>
+<li>对log格式的定义十分容易,能够扩展到数万站点</li>
+<li>自动把Markdown转成HTML</li>
+</ul>
+<p>“几乎所有的功能在Caddy里的都是插件，HTTP服务器是插件，高级的TLS特性也是插件，每一行命令实现的功能都是一个插件”</p>
+<h2 id="二、Caddy安装与快速入门"><a href="#二、Caddy安装与快速入门" class="headerlink" title="二、Caddy安装与快速入门"></a>二、Caddy安装与快速入门</h2><p><strong>安装</strong><br>可到<a href="">github</a>上下载release版本,也可以使用以下命令下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install caddy</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行完成后,检验是否安装成功</span></span><br><span class="line">which caddy</span><br></pre></td></tr></table></figure>
+
+<p><strong>Caddy命令</strong><br>在终端输入caddy即可查看caddy命令</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">adapt</td>
+<td align="left">根据Caddy的本机Json调整配置</td>
+</tr>
+<tr>
+<td align="left">add-package</td>
+<td align="left">添加caddy程序包(实验)</td>
+</tr>
+<tr>
+<td align="left">build-info</td>
+<td align="left">打印有关此生成的信息</td>
+</tr>
+<tr>
+<td align="left">environ</td>
+<td align="left">打印环境</td>
+</tr>
+<tr>
+<td align="left">file-server</td>
+<td align="left">启动生产就绪的文件服务器</td>
+</tr>
+<tr>
+<td align="left">fmt</td>
+<td align="left">格式CaddyFile</td>
+</tr>
+<tr>
+<td align="left">hash-password</td>
+<td align="left">哈希密码并写入base64</td>
+</tr>
+<tr>
+<td align="left">help</td>
+<td align="left">显示子命令帮助</td>
+</tr>
+<tr>
+<td align="left">list-modules</td>
+<td align="left">列出已经安装的caddy模块</td>
+</tr>
+<tr>
+<td align="left">reload</td>
+<td align="left">更改正在运行的caddy实例的配置</td>
+</tr>
+<tr>
+<td align="left">remove-package</td>
+<td align="left">移除caddy包(实验)</td>
+</tr>
+<tr>
+<td align="left">reverse-proxy</td>
+<td align="left">一种快速且用于生产的反向代理</td>
+</tr>
+<tr>
+<td align="left">run</td>
+<td align="left">启动caddy进程并无限期阻止</td>
+</tr>
+<tr>
+<td align="left">start</td>
+<td align="left">在后台启动caddy进程然后返回</td>
+</tr>
+<tr>
+<td align="left">stop</td>
+<td align="left">优雅停止一个已启动的caddy进程</td>
+</tr>
+<tr>
+<td align="left">trust</td>
+<td align="left">将CA证书安装到本地信任存储中</td>
+</tr>
+<tr>
+<td align="left">untrust</td>
+<td align="left">不信任本地受信任的CA证书</td>
+</tr>
+<tr>
+<td align="left">upgrade</td>
+<td align="left">升级caddy(实验)</td>
+</tr>
+<tr>
+<td align="left">validate</td>
+<td align="left">测试配置文件是否有效</td>
+</tr>
+<tr>
+<td align="left">version</td>
+<td align="left">打印版本信息</td>
+</tr>
+</tbody></table>
+<p><strong>入门实例</strong><br>新建一个Caddyfile,并输入信息:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">touch Caddyfile</span><br><span class="line">vim Caddyfile</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">:1010</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">respond <span class="string">&quot;Hello Sean!&quot;</span></span></span><br><span class="line">caddy start</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若修改Caddyfile后,执行caddy reload</span></span><br><span class="line">caddy reload</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新加载Caddyfile亦可使用如下API命令</span></span><br><span class="line">curl localhost:1010/load -X POST -H &quot;Content-Type: text/caddyfile&quot; --data-binary @Caddyfile</span><br></pre></td></tr></table></figure>
+
+<p>这时候,一个caddy服务就在后台启动了:<br><img src="/../image/caddy/1.jpg"></p>
+<p>一个简单的CaddyFile示例:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">a</span>.<span class="keyword">com</span>, <span class="keyword">b</span>.<span class="keyword">com</span> &#123;</span><br><span class="line">    encode zip</span><br><span class="line">    root /www/example.<span class="keyword">com</span></span><br><span class="line">    <span class="built_in">log</span> ../<span class="built_in">log</span>/access.<span class="built_in">log</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果我们的服务器带宽比较低,网站访问速度会很慢,这时我们可以通过让Caddy开启gzip压缩来提高网站的访问速度。</li>
+<li>其他一些功能:templates、匹配器、替换环境变量</li>
+</ul>
+<h2 id="三、Caddyfile详解"><a href="#三、Caddyfile详解" class="headerlink" title="三、Caddyfile详解"></a>三、Caddyfile详解</h2><p>Caddyfile是Caddy服务的配置文件,作用相当于Nginx的nginx.conf,运行caddy时可通过–conf选定Caddyfile存放路径。另外,Caddyfile第一行一定是网站的地址!</p>
+<p><strong>静态文件</strong><br>下面会向您展示如何快速启动并运行可用于生产的静态文件服务器。<br>命令行:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">caddy file-server --root ./website</span><br></pre></td></tr></table></figure>
+<p>root指定文件夹作为根目录</p>
+<p>Caddyfile:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">localhost</span><br><span class="line"></span><br><span class="line">root * ./website</span><br><span class="line">file_server</span><br></pre></td></tr></table></figure>
+
+<p><strong>反向代理</strong><br>假设本地有一个127.0.0.1:8080(本示例该端口运行的是nginx)在运行,下面会向您展示如何快速启动并运行反向代理。<br>命令行:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动nginx</span></span><br><span class="line">brew services start nginx</span><br><span class="line">caddy reverse --from 127.0.0.1:1010 --to 127.0.0.1:8080</span><br></pre></td></tr></table></figure>
+
+<p>Caddyfile:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:<span class="number">1010</span></span><br><span class="line"></span><br><span class="line">reverse_proxy <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8080</span>; </span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/caddy/2.jpg"></p>
+<p><strong>Https</strong><br>[此处并未实践]<br>Caddy能自动支持HTTPS,且无需手动配置证书,若想使用Caddy默认的HTTPS功能,按以下步骤操作即可。</p>
+<ul>
+<li>首先我们需要修改域名的DNS解析,直接在购买域名的网站上设置即可,这里以docs.example.com域名为例;</li>
+<li>之后使用如下命令验证DNS解析记录是否正确,注意配置服务器的80和443端口需要在外网能正常访问;<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl &quot;https://cloudflare-dns.com/dns-query?name=docs.example.com&amp;type=A&quot; \</span><br><span class="line">-H &quot;accept: application/dns-json&quot;</span><br></pre></td></tr></table></figure></li>
+<li>修改Caddyfile配置文件,进行如下配置:<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docs.example.<span class="keyword">com</span> &#123;</span><br><span class="line">    root * /mydata/caddy/html/docs</span><br><span class="line">    file_server <span class="keyword">browse</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>caddy run</li>
+</ul>
+<p><strong>负载均衡</strong><br>负载均衡简单配置如下:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">proxy / web1.loca<span class="variable">l:80</span> web2.loca<span class="variable">l:90</span> web3.loca<span class="variable">l:100</span> &#123;</span><br><span class="line">    policy round_robin</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上配置意思为用反向代理命令proxy将请求循环发送到web1、web2、web3三个后端服务上,通过policy命令控制策略为round_robin,以循环方式选择后端服务。</p>
+<p>除了round_robin外,caddy与nginx一样同样支持多种负载均衡策略,分别有:</p>
+<table>
+<thead>
+<tr>
+<th align="left">策略</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">first</td>
+<td align="left">选取第一个可用的上游</td>
+</tr>
+<tr>
+<td align="left">least_conn</td>
+<td align="left">随机选取一个可用的上游</td>
+</tr>
+<tr>
+<td align="left">ip_hash</td>
+<td align="left">根据ip的Hash值选取一个固定的上游</td>
+</tr>
+<tr>
+<td align="left">random_choose</td>
+<td align="left">随机选取2个或更多个上游,然后再从中选择负载最小的,n通常为2</td>
+</tr>
+<tr>
+<td align="left">header</td>
+<td align="left">根据请求头的Hash选取一个固定上游</td>
+</tr>
+<tr>
+<td align="left">uri_hash</td>
+<td align="left">根据请求的uri进行hash,然后选取一个上游</td>
+</tr>
+<tr>
+<td align="left">round_robin</td>
+<td align="left">循环迭代</td>
+</tr>
+<tr>
+<td align="left">cookie</td>
+<td align="left">通过cookie值hash来选取上游</td>
+</tr>
+</tbody></table>
+<p><strong>fastcgi</strong><br>caddy同样支持fastcgi代理,可以将请求通过fastcgi接口发送给后端的实现了fastcgi的server。<br>示例:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">localhost:8888 &#123;</span><br><span class="line">    faastcgi / 127.0.0.1:9000 php</span><br><span class="line">    log ./pp.log</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、Caddy-API"><a href="#四、Caddy-API" class="headerlink" title="四、Caddy API"></a>四、Caddy API</h2><p>首先启动一个caddy守护进程,之后通过终端或是浏览器访问caddy的配置,此时为空白。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:2019/config</span><br></pre></td></tr></table></figure>
+<p>若返回为null则说明此时caddy配置为空,此时我们可以通过向&#x2F;load发出post请求来更改caddy的配置,此时新建一个caddy.json文件并保存以下内容:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;apps&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;http&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;servers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">				<span class="attr">&quot;example&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;listen&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;:2015&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;routes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">						<span class="punctuation">&#123;</span></span><br><span class="line">							<span class="attr">&quot;handle&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">								<span class="attr">&quot;handler&quot;</span><span class="punctuation">:</span> <span class="string">&quot;static_response&quot;</span><span class="punctuation">,</span></span><br><span class="line">								<span class="attr">&quot;body&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Hello, world!&quot;</span></span><br><span class="line">							<span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">						<span class="punctuation">&#125;</span></span><br><span class="line">					<span class="punctuation">]</span></span><br><span class="line">				<span class="punctuation">&#125;</span></span><br><span class="line">			<span class="punctuation">&#125;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后上传并请求:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:2019/load \</span><br><span class="line">    -X POST \</span><br><span class="line">    -H &quot;Content-Type: application/json&quot; \</span><br><span class="line">    -d @caddy.json</span><br><span class="line"></span><br><span class="line">curl localhost:2019/config/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">return</span> &#123;<span class="string">&quot;apps&quot;</span>:&#123;<span class="string">&quot;http&quot;</span>:&#123;<span class="string">&quot;servers&quot;</span>:&#123;<span class="string">&quot;example&quot;</span>:&#123;<span class="string">&quot;listen&quot;</span>:[<span class="string">&quot;:2015&quot;</span>],<span class="string">&quot;routes&quot;</span>:[&#123;<span class="string">&quot;handle&quot;</span>:[&#123;<span class="string">&quot;body&quot;</span>:<span class="string">&quot;Hello, world!&quot;</span>,<span class="string">&quot;handler&quot;</span>:<span class="string">&quot;static_response&quot;</span>&#125;]&#125;]&#125;&#125;&#125;&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">curl localhost:2015</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">return</span> Hello, world!</span>     </span><br></pre></td></tr></table></figure>
+
+<p>如上方法替换整个配置来对生产服务器进行少量更改可能是危险的,所以caddy提供caddy api的强大功能来进行更改,2⃣️不需要修改我们的配置文件或上传整个配置文件,使用请求URI的路径,我们可以遍历配置结构并仅更新消息字符串:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl \</span><br><span class="line">	localhost:2019/config/apps/http/servers/example/routes/0/handle/0/body \</span><br><span class="line">	-X POST \</span><br><span class="line">	-H &quot;Content-Type: application/json&quot; \</span><br><span class="line">	-d &#x27;&quot;Work smarter, not harder.&quot;&#x27;</span><br></pre></td></tr></table></figure>
+<p>ps:每次使用api更改配置时,Caddy都会保留一份新配置的副本,以便稍后可以–resume。</p>
+<p>之后再次请求:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:2019/config/apps/http/servers/example/routes</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">return</span> [&#123;<span class="string">&quot;handle&quot;</span>:[&#123;<span class="string">&quot;body&quot;</span>:<span class="string">&quot;Work smarter, not harder.&quot;</span>,<span class="string">&quot;handler&quot;</span>:<span class="string">&quot;static_response&quot;</span>&#125;]&#125;]</span></span><br></pre></td></tr></table></figure>
+
+<p>重要提示:<br>一旦使用API进行了不在原始配置文件中的更改,配置文件就会过时,对此有三种方法可以解决:</p>
+<ul>
+<li>使用caddy run使用最后一个活动配置–resume</li>
+<li>不要讲配置文件的使用与API进行更改混合使用</li>
+<li>使用后续GET请求导出Caddy的新配置</li>
+</ul>
+<p>此外,由于配置遍历路径较长,我们可给我们的处理程序对象一个@id标签,使其更容易访问,具体用法如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl \</span><br><span class="line">	localhost:2019/config/apps/http/servers/example/routes/0/handle/0/@id \</span><br><span class="line">	-X POST \</span><br><span class="line">	-H &quot;Content-Type: application/json&quot; \</span><br><span class="line">	-d &#x27;&quot;msg&quot;&#x27;</span><br><span class="line"></span><br><span class="line">curl localhost:2019/id/msg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">之后可以用更短的路径更改消息</span></span><br><span class="line">curl \</span><br><span class="line">	localhost:2019/id/msg/body \</span><br><span class="line">	-X POST \</span><br><span class="line">	-H &quot;Content-Type: application/json&quot; \</span><br><span class="line">	-d &#x27;&quot;Some shortcuts are good.&quot;&#x27;</span><br><span class="line"></span><br><span class="line">curl localhost:2019/id/msg</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="四、service"><a href="#四、service" class="headerlink" title="四、service"></a>四、service</h2><p>&#x2F;&#x2F; todo:自启动一个服务</p>
+<h2 id="五、Caddy与Nginx对比"><a href="#五、Caddy与Nginx对比" class="headerlink" title="五、Caddy与Nginx对比"></a>五、Caddy与Nginx对比</h2><table>
+<thead>
+<tr>
+<th align="left">项目</th>
+<th align="left">Caddy</th>
+<th align="left">Nginx</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">入门难度</td>
+<td align="left">简单</td>
+<td align="left">较难</td>
+</tr>
+<tr>
+<td align="left">配置语法</td>
+<td align="left">简洁</td>
+<td align="left">复杂</td>
+</tr>
+<tr>
+<td align="left">功能扩展</td>
+<td align="left">支持,目前相对较少</td>
+<td align="left">支持,扩展较多且相对稳定</td>
+</tr>
+<tr>
+<td align="left">自动HTTPS</td>
+<td align="left">支持</td>
+<td align="left">支持</td>
+</tr>
+<tr>
+<td align="left">跨平台使用</td>
+<td align="left">几乎支持市面上所有已知系统</td>
+<td align="left">大多数操作系统</td>
+</tr>
+<tr>
+<td align="left">处理性能</td>
+<td align="left">性能较高,尤其是反向代理</td>
+<td align="left">性能高,系统资源占用率低</td>
+</tr>
+<tr>
+<td align="left">负载均衡</td>
+<td align="left">支持</td>
+<td align="left">支持</td>
+</tr>
+</tbody></table>
+
+    </div>
+    <!--文末结束语-->
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;"> --- 本文结束 <i class="fas fa-heart"></i> The End --- </div>
+    
+    <!--页脚广告-->
+    
+    <v-divider></v-divider>
+    
+    <div class="post-nav">             
+        
+            <div class="post-nav-button float-left">
+                <v-icon>chevron_left</v-icon>
+                <a class="font-weight-bold text-left" href="/2022/06/27/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7%E7%AE%97%E6%B3%95-Paxos%E3%80%81Raft/">
+                    分布式一致性算法--Paxos、Raft
+                </a>
+            </div>
+              
+          
+            <div class="post-nav-button float-right">
+                <a class="font-weight-bold text-right" href="/2022/05/11/nginx%E8%A6%81%E7%82%B9%E5%BA%94%E7%9F%A5%E5%BA%94%E4%BC%9A/">      
+                    nginx要点应知应会
+                </a>
+                <v-icon>chevron_right</v-icon>
+            </div>
+        
+    </div>
+</v-card>
+
+
+
+        
+                            <div id="mobile-footer" class="d-block d-md-none">
+                                <v-divider></v-divider>
+                                <div id="mobile-footer-content">
+                                    <span>Theme: <a target="_blank" rel="noopener" href="https://github.com/kb1000fx/hexo-theme-insulin">Insulin</a> &nbsp; Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a></span><br>
+                                    <span> &copy; 2015 - 2022 PP</span>
+                                </div>
+                            </div>                   
+                        </v-col>                                            
+                    </v-row>
+                </v-container>
+            </v-content>
+        </v-app>
+    </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.2.30"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-base64@3.5.2/base64.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.4.8/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({
+        startOnLoad: true,
+        theme: "default"
+    });</script>
+
+
+
+
+
+</body>
+</html>
